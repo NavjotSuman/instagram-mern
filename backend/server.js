@@ -6,6 +6,8 @@ import { v2 as cloudinary } from "cloudinary";
 import connectMongoDB from "./db/connectMongoDB.js";
 
 import userRoute from "./routes/user.route.js";
+import postRoute from "./routes/post.route.js";
+
 
 const app = express();
 configDotenv();
@@ -33,6 +35,8 @@ const PORT = process.env.PORT || 4000;
 
 // routes
 app.use("/api/v1/user", userRoute);
+app.use("/api/v1/post", postRoute);
+
 
 app.listen(PORT, () => {
   console.log(`server is running at port ${PORT}`);
