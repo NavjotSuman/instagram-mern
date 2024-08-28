@@ -4,7 +4,6 @@ import { Button } from "./ui/button";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
-// import { Link } from "react-router-dom";
 
 export default function SignUp() {
   const [loading, setLoading] = useState(false);
