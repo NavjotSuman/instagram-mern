@@ -11,6 +11,7 @@ import {
     REGISTER,
   } from 'redux-persist'
   import storage from 'redux-persist/lib/storage'
+import postSlice from "./postSlice";
 
 
   const persistConfig = {
@@ -20,8 +21,9 @@ import {
   }
 
   const rootReducer = combineReducers({
-    auth:authSlice,
-})  
+    auth: authSlice,
+    post: postSlice,
+  });  
   const persistedReducer = persistReducer(persistConfig, rootReducer)
   
 

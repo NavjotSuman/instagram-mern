@@ -155,17 +155,21 @@ export const addComment = async (req, res) => {
     }
 
     post.comments.push({ text: text, author: userId });
-    await post.save();
+    post = await post.save();
+    post = await post.populate({
+      path: "comments",
+      sort: { createdAt: -1 },
+      populate: { path: "author", select: "username profilePicture" },
+    });
+
+
     return res.status(201).json({
       message: "Comment Added",
-      post: post.populate({
-        path: "comments",
-        sort: { authorId: -1 },
-        populate: { path: "author", select: "username profilePicture" },
-      }),
+      comment: post,
       success: true,
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       message: `Internal Server error`,
       success: false,
@@ -253,13 +257,11 @@ export const bookmarkPost = async (req, res) => {
       // Remove from Bookmark of user
       await user.updateOne({ $pull: { bookmarks: post._id } });
       await user.save();
-      return res
-        .status(200)
-        .json({
-          type: "unsaved",
-          message: "Post removed from bookmark",
-          success: true,
-        });
+      return res.status(200).json({
+        type: "unsaved",
+        message: "Post removed from bookmark",
+        success: true,
+      });
     } else {
       // Add to Bookmark of the user
       await user.updateOne({ $addToSet: { bookmarks: post._id } });

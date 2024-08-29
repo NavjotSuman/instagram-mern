@@ -10,7 +10,7 @@ router.get("/userpost/all",protectedRoute,getUserPost)
 router.get("/:postId/likedislike",protectedRoute,likeDislikePost)
 router.post("/:postId/comment",protectedRoute,addComment)
 router.post("/:postId/commentall",protectedRoute,getCommentsOfPost)
-router.post("/:postId/delete",protectedRoute,deletePost)
+router.delete("/:postId/delete",protectedRoute,deletePost)
 router.post("/:postId/bookmark",protectedRoute,bookmarkPost)
 
 export default router
