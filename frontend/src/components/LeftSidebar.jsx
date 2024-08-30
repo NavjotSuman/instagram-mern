@@ -7,6 +7,7 @@ import { toast } from 'sonner'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import { setAuthUser } from './redux/authSlice'
 import CreatePost from './CreatePost'
+import { setPosts, setSelectedPost } from './redux/postSlice'
 
 export default function LeftSidebar() {
     const navigate = useNavigate()
@@ -61,6 +62,8 @@ export default function LeftSidebar() {
         );
         if (res.data.success) {
             dispatch(setAuthUser(null));
+            dispatch(setSelectedPost(null))
+            dispatch(setPosts([]))
           navigate("/login");
           toast.success(res.data.message);
         }

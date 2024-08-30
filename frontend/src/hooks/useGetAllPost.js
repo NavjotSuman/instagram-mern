@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 export default function useGetAllPost() {
-    const dispatch = useDispatch()
+  const dispatch = useDispatch();
   useEffect(() => {
     const fetchAllPosts = async () => {
       try {
