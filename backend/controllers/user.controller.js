@@ -212,7 +212,7 @@ export const editProfile = async (req, res) => {
     user.bio = bio || user.bio;
     user.gender = gender || user.gender;
     user.fullName = fullName || user.fullName;
-    user.profilePicture = cloudResponse.secure_url || user.profilePicture;
+    user.profilePicture = cloudResponse?.secure_url || user.profilePicture;
 
     user = await user.save();
 

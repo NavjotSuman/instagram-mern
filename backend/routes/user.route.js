@@ -9,7 +9,7 @@ router.post("/register",register)
 router.post("/login",login)
 router.get("/logout",logout)
 router.get("/:username/profile",getProfile)
-router.post("/profile/edit", protectedRoute, upload.single("profilePicture"),editProfile);
+router.put("/profile/edit", protectedRoute, upload.single("profilePhoto"),editProfile);
 router.get("/suggested",protectedRoute,suggestedUser)
 router.post("/followUnfollow/:id",protectedRoute,followUnfollowUser)
 

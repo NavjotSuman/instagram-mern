@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
-import { setAuthUser } from './redux/authSlice'
+import { setAuthUser, setSuggestedUser } from './redux/authSlice'
 import CreatePost from './CreatePost'
 import { setPosts, setSelectedPost } from './redux/postSlice'
 
@@ -64,6 +64,7 @@ export default function LeftSidebar() {
             dispatch(setAuthUser(null));
             dispatch(setSelectedPost(null))
             dispatch(setPosts([]))
+            dispatch(setSuggestedUser([]))
           navigate("/login");
           toast.success(res.data.message);
         }
@@ -79,6 +80,8 @@ export default function LeftSidebar() {
           setOpen(true);
         } else if (textType === "Profile"){
             navigate(`/profile/${user?.username}`)
+        } else if (textType === "Home") {
+            navigate("/")
         }
     }
 
