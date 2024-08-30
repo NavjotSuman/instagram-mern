@@ -77,6 +77,8 @@ export default function LeftSidebar() {
             logoutHandle()
         }else if (textType === "Create") {
           setOpen(true);
+        } else if (textType === "Profile"){
+            navigate(`/profile/${user?.username}`)
         }
     }
 
