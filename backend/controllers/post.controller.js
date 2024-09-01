@@ -2,6 +2,7 @@ import sharp from "sharp";
 import Post from "../models/post.model.js";
 import User from "../models/user.model.js";
 import { v2 as cloudinary } from "cloudinary";
+import { getReceiverSocketId, io } from "../socket/socket.js";
 
 // ================================= Create New Post ============================================
 export const addNewPost = async (req, res) => {
@@ -121,12 +122,39 @@ export const likeDislikePost = async (req, res) => {
       await Post.updateOne({ _id: postId }, { $pull: { likes: req.user._id } });
 
       // implement socket io for real time notification
+      const user = await User.findById(req.user._id).select("username profilePicture")
+      if (post?.author.toString() !== req?.user._id) {
+        // emit a notification event
+        const notification = {
+          type:'dislike',
+          userId:req.user._id,
+          userDetails:user,
+          postId,
+          message:'Your post was liked'
+      }
+      const postOwnerSocketId = getReceiverSocketId(post?.author.toString());
+      io.to(postOwnerSocketId).emit('notification', notification);
+      }
+
       return res.status(200).json({ message: "liked Disliked", success: true });
     } else {
       // like the post
       await Post.updateOne({ _id: postId }, { $push: { likes: req.user._id } });
 
       // implement socket io for real time notification
+      const user = await User.findById(req.user._id).select("username profilePicture")
+      if (post?.author.toString() !== req?.user._id) {
+        // emit a notification event
+        const notification = {
+          type:'like',
+          userId:req.user._id,
+          userDetails:user,
+          postId,
+          message:'Your post was liked'
+      }
+      const postOwnerSocketId = getReceiverSocketId(post?.author.toString());
+      io.to(postOwnerSocketId).emit('notification', notification);
+      }
       return res.status(200).json({ message: "Post liked", success: true });
     }
   } catch (error) {
@@ -245,14 +273,15 @@ export const deletePost = async (req, res) => {
 export const bookmarkPost = async (req, res) => {
   try {
     const { postId } = req.params;
-    const authorId = req.user._id;
+    const userId = req.user._id;
     const post = await Post.findById(postId);
+    console.log(post)
     if (!post)
       return res
         .status(404)
         .json({ message: "Post not found", success: false });
 
-    const user = await User.findById(authorId);
+    const user = await User.findById(userId);
     if (user.bookmarks.includes(post._id)) {
       // Remove from Bookmark of user
       await user.updateOne({ $pull: { bookmarks: post._id } });
@@ -271,6 +300,7 @@ export const bookmarkPost = async (req, res) => {
         .json({ type: "saved", message: "Post bookmarked", success: true });
     }
   } catch (error) {
+    console.log(error)
     res.status(500).json({
       message: `Internal Server error`,
       success: false,
