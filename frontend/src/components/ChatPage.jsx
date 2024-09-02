@@ -21,7 +21,7 @@ export default function ChatPage() {
   const sendMessageHandler = async (receiverId) => {
     try {
         const res = await axios.post(
-            `http://localhost:4000/api/v1/message/send/${receiverId}`,
+            `https://instagram-mern-kzog.onrender.com/api/v1/message/send/${receiverId}`,
             { textMessage },
             {
               headers: {

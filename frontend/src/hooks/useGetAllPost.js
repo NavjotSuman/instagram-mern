@@ -8,7 +8,7 @@ export default function useGetAllPost() {
   useEffect(() => {
     const fetchAllPosts = async () => {
       try {
-        const res = await axios.get("http://localhost:4000/api/v1/post/all", {
+        const res = await axios.get("https://instagram-mern-kzog.onrender.com/api/v1/post/all", {
           withCredentials: true,
         });
         if (res.data.success) {

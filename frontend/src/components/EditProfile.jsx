@@ -39,7 +39,7 @@ export default function EditProfile() {
                 formData.append("profilePhoto", input.profilePhoto);
             }
             const res = await axios.put(
-                `http://localhost:4000/api/v1/user/profile/edit`,
+                `https://instagram-mern-kzog.onrender.com/api/v1/user/profile/edit`,
                 formData,
                 {
                     headers: { "Content-Type": "multipart/form-data" },

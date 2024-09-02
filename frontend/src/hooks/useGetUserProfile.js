@@ -8,7 +8,7 @@ export default function useGetUserProfile(username) {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const res = await axios.get(`http://localhost:4000/api/v1/user/${username}/profile`, {
+        const res = await axios.get(`https://instagram-mern-kzog.onrender.com/api/v1/user/${username}/profile`, {
           withCredentials: true,
         });
         if (res.data.success) {

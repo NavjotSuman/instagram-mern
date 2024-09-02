@@ -33,7 +33,7 @@ export default function Post({ post }) {
   async function deletePostHandler(e) {
     try {
       const res = await axios.delete(
-        `http://localhost:4000/api/v1/post/${post._id}/delete`,
+        `https://instagram-mern-kzog.onrender.com/api/v1/post/${post._id}/delete`,
         { withCredentials: true }
       );
       if (res.data.success) {
@@ -49,7 +49,7 @@ export default function Post({ post }) {
   async function likeOrDislikeHandler(e) {
     try {
       const res = await axios.get(
-        `http://localhost:4000/api/v1/post/${post._id}/likedislike`,
+        `https://instagram-mern-kzog.onrender.com/api/v1/post/${post._id}/likedislike`,
         { withCredentials: true }
       );
       if (res.data.success) {
@@ -76,7 +76,7 @@ export default function Post({ post }) {
   const bookmarkHandler = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:4000/api/v1/post/${post?._id}/bookmark`,
+        `https://instagram-mern-kzog.onrender.com/api/v1/post/${post?._id}/bookmark`,
         { withCredentials: true }
       );
       if (res.data.success) {
@@ -90,7 +90,7 @@ export default function Post({ post }) {
   const commentHandler = async () => {
     try {
       const res = await axios.post(
-        `http://localhost:4000/api/v1/post/${post._id}/comment`,
+        `https://instagram-mern-kzog.onrender.com/api/v1/post/${post._id}/comment`,
         { text },
         {
           headers: {

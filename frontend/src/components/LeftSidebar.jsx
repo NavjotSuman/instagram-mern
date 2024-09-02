@@ -68,7 +68,7 @@ const { likeNotification } = useSelector((store) => store.realTimeNotification);
   ];
   async function logoutHandle() {
     try {
-      const res = await axios.get("http://localhost:4000/api/v1/user/logout", {
+      const res = await axios.get("https://instagram-mern-kzog.onrender.com/api/v1/user/logout", {
         withCredentials: true,
       });
       if (res.data.success) {

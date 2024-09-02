@@ -28,7 +28,7 @@ export default function Login() {
     setLoading(true);
     try {
       const res = await axios.post(
-        "http://localhost:4000/api/v1/user/login",
+        "https://instagram-mern-kzog.onrender.com/api/v1/user/login",
         input,
         {
           headers: {
