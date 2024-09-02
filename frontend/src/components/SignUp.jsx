@@ -3,10 +3,14 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function SignUp() {
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const { user } = useSelector((store) => store.auth);
+
   const [input, setInput] = useState({
     username: "",
     fullName: "",
@@ -28,21 +32,20 @@ export default function SignUp() {
           "Content-type": "application/json",
         },
         body: JSON.stringify(input),
-      })
-      const data = await res.json()
+      });
+      const data = await res.json();
       if (data.success) {
-        toast.success("Account Created Successfully")
+        toast.success("Account Created Successfully");
         setInput({
           username: "",
           fullName: "",
           email: "",
           password: "",
         });
-      }
-      else{
+      } else {
         throw new Error(data.message || "Something went Wrong");
-              }
-      return data
+      }
+      return data;
     } catch (error) {
       console.log(error.message);
       toast.error(error.message);
@@ -50,6 +53,12 @@ export default function SignUp() {
       setLoading(false);
     }
   }
+
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, []);
 
   return (
     <div className="flex items-center w-screen h-screen justify-center">
